@@ -5,9 +5,9 @@
   import DOMPurify from "dompurify";
 
   import { type Component } from "svelte";
-  import { browser } from "$app/environment";
   import type { Message } from "$lib/types/message";
 
+  import { page } from "$app/state";
   import { BadgeCheck, Code } from "@lucide/svelte";
 
   const { data }: { data: Message } = $props();
@@ -25,7 +25,12 @@
   </button>
 {/snippet}
 
-<div class="bg-zinc-900 p-3 rounded-xl relative group">
+<div
+  class={[
+    "bg-zinc-900 p-3 rounded-xl relative group",
+    data.content.includes(page.data.user.name) ? "bg-yellow-500/10!" : "",
+  ]}
+>
   <div
     class="absolute text-zinc-200/75 m-1 top-1 right-1 hidden group-hover:block"
   >
