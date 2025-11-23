@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter/Inter-VariableFont_opsz,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Twemoji";
+  src: url("/assets/fonts/Twemoji/twemoji.ttf") format("truetype-variations");
+  font-display: swap;
+}
+
+img {
+  @apply rounded-xl;
+}
+
+mark {
+  @apply bg-zinc-100 font-medium rounded-md p-0.5;
+}
+
+body {
+  font-family: "Inter", "Twemoji", sans-serif;
+}
+
+blockquote {
+  @apply border-l-2 border-zinc-600 text-zinc-400 italic pl-2;
+}
