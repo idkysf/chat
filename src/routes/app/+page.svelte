@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Message as MessageType } from "$lib/types/message";
-  import type { PageData } from "./$types";
+  import type { PageServerData } from "./$types";
   import * as emoji from "node-emoji";
 
   import { ChatSocket } from "$lib/socket";
@@ -15,8 +15,9 @@
 
   import { LoaderCircle } from "@lucide/svelte";
 
-  const { data }: { data: PageData } = $props();
-  const socket = new ChatSocket("");
+  const { data }: { data: { token: string; messages: MessageType[] } } =
+    $props();
+  const socket = new ChatSocket(data?.token ?? "");
 
   let messages: MessageType[] = $state(data.messages);
 
