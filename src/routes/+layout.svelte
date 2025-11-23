@@ -13,6 +13,8 @@
     <div>
       {#if user.name}
         <a href="/logout" class="font-bold">@{user?.name}</a>
+      {:else}
+        <a href="/login">Login</a>
       {/if}
     </div>
   </nav>
