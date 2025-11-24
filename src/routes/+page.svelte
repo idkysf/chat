@@ -3,6 +3,10 @@
   import { ExternalLink } from "@lucide/svelte";
 </script>
 
+<svelte:head>
+  <title>Aero</title>
+</svelte:head>
+
 <main class="space-y-4">
   <span class="flex items-center">
     <h1 class="text-6xl font-bold">Aero</h1>

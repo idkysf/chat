@@ -38,6 +38,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>Aero - Chat</title>
+</svelte:head>
+
 <main class="flex gap-2 justify-center">
   <Sidebar bind:draftedMessage={draft} />
 

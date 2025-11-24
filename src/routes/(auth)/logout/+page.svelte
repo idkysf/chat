@@ -8,6 +8,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Aero - Log out?</title>
+</svelte:head>
+
 <p>Are you sure you want to log out?</p>
 
 <div class="grid grid-cols-2 w-64 text-center gap-2">
