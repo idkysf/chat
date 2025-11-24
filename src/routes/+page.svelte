@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Aero</title>
+  <title>Aero — The Better wasteof.money/chat</title>
 </svelte:head>
 
 <main class="space-y-4">
