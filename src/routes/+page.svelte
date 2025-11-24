@@ -19,7 +19,7 @@
   </p>
 
   <button
-    onclick={() => goto("/login")}
+    onclick={() => goto("/app")}
     class="w-fit cursor-pointer p-3 bg-zinc-100 text-black font-bold rounded-xl flex items-center gap-2"
   >
     <ExternalLink size={22} />
