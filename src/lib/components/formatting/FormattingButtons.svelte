@@ -9,6 +9,7 @@
     Strikethrough,
     Subscript,
     Superscript,
+    TextWrap,
     Underline,
   } from "@lucide/svelte";
   import Format from "./Format.svelte";
@@ -31,4 +32,14 @@
     <Format bind:ref Icon={Superscript} format="sup" />
     <Format bind:ref Icon={Subscript} format="sub" />
   </div>
+
+  <button
+    onclick={() => {
+      ref = `${ref}<br />`;
+      document.querySelector<HTMLInputElement>("#messagebox")?.focus();
+    }}
+    class="bg-zinc-800 w-full flex items-center justify-center select-none hover:scale-105 cursor-pointer duration-200 rounded-lg p-2"
+  >
+    <TextWrap size={18} />
+  </button>
 </div>
