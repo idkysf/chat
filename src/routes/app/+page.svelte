@@ -1,40 +1,49 @@
 <script lang="ts">
   import type { Message as MessageType } from "$lib/types/message";
   import type { PageServerData } from "./$types";
-  import * as emoji from "node-emoji";
 
-  import { ChatSocket } from "$lib/socket";
   import { makehash } from "$lib/hash";
-
-  import DOMPurify from "dompurify";
-  import { browser } from "$app/environment";
 
   import MessageBox from "$lib/components/message/MessageBox.svelte";
   import Message from "$lib/components/message/Message.svelte";
   import Sidebar from "$lib/components/Sidebar.svelte";
 
   import { LoaderCircle } from "@lucide/svelte";
+  import { browser } from "$app/environment";
+  import { onMount } from "svelte";
 
-  const { data }: { data: PageServerData } =
-    $props();
-  const socket = new ChatSocket(data?.token ?? "");
+  const { data }: { data: PageServerData } = $props();
 
   let messages: MessageType[] = $state(data.messages);
-
   let draft = $state("");
-  $effect(() => {
-    draft = emoji.emojify(draft);
-  });
 
-  socket.listen((message) => {
-    message._id = makehash(12);
+  // we import these on the client-side later heh
+  let socket: any = null;
+  let DOMPurify: any = null;
+  let emoji: any = null;
 
-    if (browser) {
+  onMount(async () => {
+    const [{ ChatSocket }, dompurifyModule, emojiModule] = await Promise.all([
+      import("$lib/socket"),
+      import("dompurify"),
+      import("node-emoji"),
+    ]);
+
+    DOMPurify = dompurifyModule.default;
+    emoji = emojiModule;
+
+    socket = new ChatSocket(data?.token ?? "");
+
+    socket.listen((message: MessageType) => {
+      message._id = makehash(12);
       message.raw = message.content;
       message.content = DOMPurify.sanitize(message.content);
-    }
+      messages = [message, ...messages];
+    });
 
-    messages = [message, ...messages];
+    $effect(() => {
+      draft = emoji.emojify(draft);
+    });
   });
 </script>
 
@@ -65,6 +74,11 @@
       {/if}
     </div>
 
-    <MessageBox bind:value={draft} send={() => socket.send(draft)} />
+    <MessageBox
+      bind:value={draft}
+      send={() => {
+        if (socket) socket.send(draft);
+      }}
+    />
   </div>
 </main>
