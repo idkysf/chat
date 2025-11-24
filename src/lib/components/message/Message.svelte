@@ -47,13 +47,13 @@
     />
     <div>
       <div class="flex items-center gap-2">
-        <p class="font-bold">@{data.from.name}</p>
+        <a
+          target="_blank"
+          href={`https://wasteof.money/@${data.from.name}`}
+          class="cursor-pointer font-bold">@{data.from.name}</a
+        >
         {#if data.from.verified}
           <BadgeCheck size={18} />
-        {/if}
-
-        {#if data.from.name === "aero" || data.from.name === "spark"}
-          <CodeXml size={18} />
         {/if}
       </div>
       <p class="text-zinc-200/50 text-xs">
