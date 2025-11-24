@@ -11,6 +11,7 @@
   import { LoaderCircle } from "@lucide/svelte";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
+  import { emojify } from "node-emoji";
 
   const { data }: { data: PageServerData } = $props();
 
@@ -20,17 +21,20 @@
   // we import these on the client-side later heh
   let socket: any = null;
   let DOMPurify: any = null;
-  let emoji: any = null;
+
+  $effect(() => {
+    draft = emojify(draft);
+  });
 
   onMount(async () => {
-    const [{ ChatSocket }, dompurifyModule, emojiModule] = await Promise.all([
+    console.log("[debug] app has been loaded");
+
+    const [{ ChatSocket }, dompurifyModule] = await Promise.all([
       import("$lib/socket"),
       import("dompurify"),
-      import("node-emoji"),
     ]);
 
     DOMPurify = dompurifyModule.default;
-    emoji = emojiModule;
 
     socket = new ChatSocket(data?.token ?? "");
 
@@ -42,10 +46,6 @@
         FORBID_TAGS: ["big", "small"],
       });
       messages = [message, ...messages];
-    });
-
-    $effect(() => {
-      draft = emoji.emojify(draft);
     });
   });
 </script>
