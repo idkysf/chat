@@ -6,21 +6,16 @@ export const handle: Handle = async ({ event, resolve }) => {
   const session = event.cookies.get("wom_token");
 
   if (session) {
-    try {
-      const res = await event.fetch("https://api.wasteof.money/session", {
-        headers: {
-          Authorization: session,
-        },
-      });
+    const res = await event.fetch("https://api.wasteof.money/session", {
+      headers: {
+        Authorization: session,
+      },
+    });
 
-      if (res.ok) {
-        const data = await res.json();
-        event.locals.user.name = data.user.name;
-      } else {
-        event.cookies.delete("wom_token", { path: "/" })
-      }
-    } catch (error) {
-      event.locals.user = {};
+    const data = await res.json();
+    if (data.user) {
+      event.locals.user.name = data.user.name;
+    } else {
       event.cookies.delete("wom_token", { path: "/" })
     }
   } else {
