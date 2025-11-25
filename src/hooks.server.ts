@@ -16,16 +16,16 @@ export const handle: Handle = async ({ event, resolve }) => {
       if (res.ok) {
         const data = await res.json();
         event.locals.user.name = data.user.name;
+      } else {
+        event.cookies.delete("wom_token", { path: "/" })
       }
     } catch (error) {
-      console.error("ERR", error);
       event.locals.user = {};
+      event.cookies.delete("wom_token", { path: "/" })
     }
   } else {
     event.locals.user = {};
   }
-
-  console.log(event.locals);
 
   if (event.url.pathname.startsWith("/app") && !event.locals.user.name) {
     throw redirect(303, "/login");
